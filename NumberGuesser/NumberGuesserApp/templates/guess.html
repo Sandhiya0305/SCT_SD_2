@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Guesser</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guesser</h1>
+
+        <form method="post" class="guess-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guess</button>
+            <button type="submit" name="reset" class="reset-btn">Reset</button>
+        </form>
+
+        {% if message %}
+            <p id="feedback">{{ message }}</p>
+            <audio id="feedbackSound" src="{% static 'sounds/'|add:sound|add:'.mp3' %}" autoplay></audio>
+            <script>
+                setTimeout(() => {
+                    const audio = document.getElementById('feedbackSound');
+                    if (audio) audio.play();
+                }, 200);
+            </script>
+        {% endif %}
+    </div>
+</body>
+</html>
